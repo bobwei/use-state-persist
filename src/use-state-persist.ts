@@ -46,16 +46,20 @@ export const useStatePersist = <T>(
   const updateState: Dispatch<SetStateAction<T>> = data => {
     try {
       // Allow value to be a function so we have same API as useState
-      const valueToStore = data instanceof Function ? data(state as T) : data;
+      // const valueToStore = data instanceof Function ? data(state as T) : data;
       // Save state
-      setState(valueToStore);
+      setState(data);
       // Save to local storage
 
-      syncStorage.setItem(storageNamespace + key, valueToStore);
+      // syncStorage.setItem(storageNamespace + key, valueToStore);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    syncStorage.setItem(storageNamespace + key, state);
+  }, [state]);
 
   const isState = useCallback(
     (compareValue: any) => {
