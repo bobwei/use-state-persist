@@ -48,7 +48,7 @@ export const useStatePersist = <T>(
       // Allow value to be a function so we have same API as useState
       // const valueToStore = data instanceof Function ? data(state as T) : data;
       // Save state
-      setState(data);
+      setState(data as T);
       // Save to local storage
 
       // syncStorage.setItem(storageNamespace + key, valueToStore);
