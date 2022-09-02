@@ -43,20 +43,6 @@ export const useStatePersist = <T>(
     return () => unsubscribe();
   }, []);
 
-  const updateState: Dispatch<SetStateAction<T>> = data => {
-    try {
-      // Allow value to be a function so we have same API as useState
-      // const valueToStore = data instanceof Function ? data(state as T) : data;
-      // Save state
-      setState(data as T);
-      // Save to local storage
-
-      // syncStorage.setItem(storageNamespace + key, valueToStore);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     syncStorage.setItem(storageNamespace + key, state);
   }, [state]);
@@ -68,5 +54,5 @@ export const useStatePersist = <T>(
     [state]
   );
 
-  return [state as T, updateState];
+  return [state as T, setState as Dispatch<SetStateAction<T>>];
 };
