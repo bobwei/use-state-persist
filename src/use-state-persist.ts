@@ -44,7 +44,11 @@ export const useStatePersist = <T>(
   }, []);
 
   useEffect(() => {
-    syncStorage.setItem(storageNamespace + key, state);
+    if (state === undefined || state === null) {
+      syncStorage.removeItem(storageNamespace + key);
+    } else {
+      syncStorage.setItem(storageNamespace + key, state);
+    }
   }, [state]);
 
   const isState = useCallback(
